@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 REST API Dashboard</h1>
+            <p>Beautiful, Modern, and Fully Functional API Dashboard</p>
+        </div>
+
+        <div class="dashboard">
+            <div class="stats-card">
+                <h3>Total Requests</h3>
+                <div class="stat-number"><%= totalRequests %></div>
+            </div>
+            <div class="stats-card">
+                <h3>API Status</h3>
+                <div class="stat-number" style="color: #10b981;">Live</div>
+            </div>
+        </div>
+
+        <div class="endpoints-grid">
+            <% routes.forEach(route => { %>
+                <div class="endpoint-card">
+                    <div class="endpoint-header">
+                        <h3><%= route.name === 'home' ? 'API Root' : route.name %></h3>
+                        <div class="endpoint-method method-get">REST</div>
+                    </div>
+                    
+                    <div class="endpoint-url">
+                        <%= baseUrl %>/api<%= route.name === 'home' ? '' : route.name %>
+                    </div>
+                    
+                    <div class="endpoint-description">
+                        Complete REST API endpoints for <%= route.name === 'home' ? 'API information' : route.name %> management
+                    </div>
+
+                    <div class="test-buttons">
+                        <button class="btn btn-primary test-btn" 
+                                data-method="GET" 
+                                data-endpoint="/api<%= route.name === 'home' ? '' : route.name %>">
+                            GET
+                        </button>
+                        <% if (route.name !== 'home') { %>
+                            <button class="btn btn-outline test-btn" 
+                                    data-method="POST" 
+                                    data-endpoint="/api<%= route.name %>">
+                                POST
+                            </button>
+                            <button class="btn btn-outline test-btn" 
+                                    data-method="PUT" 
+                                    data-endpoint="/api<%= route.name %>/1">
+                                PUT
+                            </button>
+                            <button class="btn btn-outline test-btn" 
+                                    data-method="DELETE" 
+                                    data-endpoint="/api<%= route.name %>/1">
+                                DELETE
+                            </button>
+                        <% } %>
+                    </div>
+
+                    <div class="response-area" style="margin-top: 1rem;">
+                        Click a method to test...
+                    </div>
+                </div>
+            <% }); %>
+        </div>
+
+        <div class="footer">
+            <p>Built with ❤️ using Node.js, Express.js & Vercel</p>
+            <p>Total Requests: <strong><%= totalRequests %></strong> | Base URL: <code><%= baseUrl %></code></p>
+        </div>
+    </div>
+
+    <script src="/js/script.js"></script>
+</body>
+</html>
